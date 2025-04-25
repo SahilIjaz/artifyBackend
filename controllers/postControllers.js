@@ -86,3 +86,17 @@ exports.ownAllPosts = catchAsync(async (req, res, next) => {
     data: posts,
   });
 });
+
+exports.allPOstsOneCategory = catchAsync(async (req, res, next) => {
+  const posts = await Post.find({ category: req.params.category });
+
+  if (posts.length === 0) {
+    return next(new appError("No posts found against this category.", 404));
+  }
+  res.status(200).json({
+    message: "All posts against this category found successfully.",
+    status: 200,
+    length: posts.length,
+    data: posts,
+  });
+});

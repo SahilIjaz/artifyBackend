@@ -1,24 +1,12 @@
-const express = require("express");
-const cors = require("cors");
 const nodemailer = require("nodemailer");
-require("dotenv").config();
-
 const ContactUs = require("../models/contactUsModel");
 const catchAsync = require("../utils/catchAsync");
 const appError = require("../utils/appError");
+
 exports.contactUs = catchAsync(async (req, res, next) => {
   const { name, email, subject, message } = req.body;
 
-  const contactUs = await ContactUs.create({
-    name,
-    email,
-    subject,
-    message,
-  });
-
-  if (!contactUs) {
-    return next(new appError("Requested contact was not created.", 400));
-  }
+  const contactUs = await ContactUs.create({ name, email, subject, message });
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -29,25 +17,26 @@ exports.contactUs = catchAsync(async (req, res, next) => {
   });
 
   const mailOptions = {
-    from: email,
+    from: process.env.EMAIL_USERNAME,
     to: process.env.EMAIL_USERNAME,
+    replyTo: email,
     subject: `Contact Form: ${subject}`,
     text: `From: ${name} (${email})\n\nMessage: ${message}`,
   };
 
   try {
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: "Email sent!" });
+    res.status(200).json({
+      message: "Contact saved and email sent!",
+      data: contactUs,
+    });
   } catch (error) {
     console.error("Email error:", error);
-    res.status(500).json({ error: "Failed to send email." });
+    res.status(500).json({
+      message: "Contact saved, but email failed to send.",
+      data: contactUs,
+    });
   }
-
-  res.status(200).json({
-    message: "Contact us has been created successfully.",
-    status: 200,
-    data: contactUs,
-  });
 });
 
 exports.allContactsMade = catchAsync(async (req, res, next) => {

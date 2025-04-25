@@ -9,9 +9,11 @@ app.options("*", cors());
 
 const authRoutes = require("./routes/authRoutes");
 const categoryRoutes = require("./routes/caegoryRoutes.js");
+const postRoutes = require("./routes/postRoutes");
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/pi/v1/category", categoryRoutes);
+app.use("/api/v1/post", postRoutes);
 
 const globalErrors = require("./controllers/errControllers");
 

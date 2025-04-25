@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const postSchema = new mongoose.Schema(
   {
     file: {
-      type: image,
+      type: String,
     },
     caption: {
       type: String,

@@ -47,33 +47,33 @@ exports.updatePost = catchAsync(async (req, res, next) => {
 });
 
 exports.deletePost = catchAsync(async (req, res, next) => {
-  const post = await Post.findOneAndDelete({
-    _id: req.params.id,
-    creator: req.user._id,
-  });
+  if (req.user.role !== "admin") {
+    const post = await Post.findOneAndDelete({
+      _id: req.params.id,
+      creator: req.user._id,
+    });
 
-  if (!post) {
-    return next(new appError("Requested post was not found.", 404));
+    if (!post) {
+      return next(new appError("Requested post was not found.", 404));
+    }
+
+    res.status(201).json({
+      message: "Requested post deleted successfully.",
+      status: 201,
+      data: null,
+    });
+  } else {
+    const post = await Post.findByIdAndDelete(req.params.id);
+    if (!post) {
+      return next(new appError("Requested post was not deleted.", 404));
+    }
+
+    re.status(201).json({
+      message: "Requested post deleted successfully.",
+      status: 201,
+      data: null,
+    });
   }
-
-  res.status(201).json({
-    message: "Requested post deleted successfully.",
-    status: 201,
-    data: null,
-  });
-});
-
-exports.deleteByAdmin = catchAsync(async (req, res, next) => {
-  const post = await Post.findByIdAndDelete(req.params.id);
-  if (!post) {
-    return next(new appError("Requested post was not deleted.", 404));
-  }
-
-  re.status(201).json({
-    message: "Requested post deleted successfully.",
-    status: 201,
-    data: null,
-  });
 });
 
 exports.ownAllPosts = catchAsync(async (req, res, next) => {
@@ -87,7 +87,7 @@ exports.ownAllPosts = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.allPOstsOneCategory = catchAsync(async (req, res, next) => {
+exports.allPostsOneCategory = catchAsync(async (req, res, next) => {
   const posts = await Post.find({ category: req.params.category });
 
   if (posts.length === 0) {
@@ -95,6 +95,17 @@ exports.allPOstsOneCategory = catchAsync(async (req, res, next) => {
   }
   res.status(200).json({
     message: "All posts against this category found successfully.",
+    status: 200,
+    length: posts.length,
+    data: posts,
+  });
+});
+
+exports.AllPosts = catchAsync(async (req, res, next) => {
+  const posts = await Post.find();
+
+  res.status(200).json({
+    message: "All posts created by you found successfully.",
     status: 200,
     length: posts.length,
     data: posts,

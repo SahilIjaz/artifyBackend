@@ -11,11 +11,13 @@ const authRoutes = require("./routes/authRoutes");
 const postRoutes = require("./routes/postRoutes");
 const favoriteRoutes = require("./routes/favoritesRoutes");
 const categoryRoutes = require("./routes/caegoryRoutes.js");
+const contactUsRoutes = require("./routes/contactUsRoutes.js");
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/post", postRoutes);
 app.use("/pi/v1/category", categoryRoutes);
 app.use("/api/v1/favorite", favoriteRoutes);
+app.use("/api/v1/contactUs", contactUsRoutes);
 
 const globalErrors = require("./controllers/errControllers");
 

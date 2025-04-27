@@ -15,7 +15,7 @@ const contactUsRoutes = require("./routes/contactUsRoutes.js");
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/post", postRoutes);
-app.use("/pi/v1/category", categoryRoutes);
+app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/favorite", favoriteRoutes);
 app.use("/api/v1/contactUs", contactUsRoutes);
 

@@ -17,7 +17,7 @@ exports.createCategory = catchAsync(async (req, res, next) => {
   return res.status(200).json({
     message: "Category has been created successfully.",
     status: 200,
-    data: Category,
+    data: category,
   });
 });
 
@@ -34,7 +34,7 @@ exports.getOneCategory = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllCategories = catchAsync(async (req, res, next) => {
-  const categories = await category.find();
+  const categories = await ategory.find();
 
   res.status(200).json({
     message: "All categories found successfully.",

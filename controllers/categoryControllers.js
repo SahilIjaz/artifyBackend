@@ -34,7 +34,7 @@ exports.getOneCategory = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllCategories = catchAsync(async (req, res, next) => {
-  const categories = await ategory.find();
+  const categories = await Category.find();
 
   res.status(200).json({
     message: "All categories found successfully.",

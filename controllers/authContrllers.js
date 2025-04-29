@@ -14,7 +14,7 @@ const { log } = require("util");
 //signUp
 exports.signUp = catchAsync(async (req, res, next) => {
   let user;
-  const { email, password, confirmPassword } = req.body;
+  const { email, password, confirmPassword, account } = req.body;
 
   if (!(email || password)) {
     return res.status(400).json({

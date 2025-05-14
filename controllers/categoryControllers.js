@@ -34,6 +34,7 @@ exports.getOneCategory = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllCategories = catchAsync(async (req, res, next) => {
+  console.log("THIS ROUTE HIT ");
   const categories = await Category.find();
 
   res.status(200).json({

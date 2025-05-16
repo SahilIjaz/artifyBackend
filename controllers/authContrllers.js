@@ -411,6 +411,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   console.log("PRTECT HIT NOW");
+  console.log("PRTECT HIT NOW");
   let token;
   if (
     req.headers.authorization &&

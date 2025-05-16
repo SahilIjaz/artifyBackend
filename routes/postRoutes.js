@@ -2,10 +2,15 @@ const postControllers = require("../controllers/postControllers");
 const express = require("express");
 const router = express.Router();
 const authControllers = require("../controllers/authContrllers");
+const { upload } = require("../utils/cloudinary");
 
 router
   .route("/create-post")
-  .post(authControllers.protect, postControllers.createPost);
+  .post(
+    authControllers.protect,
+    upload.single("file"),
+    postControllers.createPost
+  );
 
 router
   .route("/get-one-post/:id")

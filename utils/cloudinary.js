@@ -3,15 +3,15 @@ const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  cloud_name: "dqavw7pib",
+  api_key: "796185497241856",
+  api_secret: "kARJE76u3g1Nq7_SaAi43BjsAAc",
 });
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "artify-posts", // folder in your Cloudinary account
+    folder: "Dynamic folders", // folder in your Cloudinary account
     allowed_formats: ["jpg", "png", "jpeg", "webp"],
   },
 });

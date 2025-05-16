@@ -4,10 +4,18 @@ const appError = require("../utils/appError");
 
 exports.createPost = catchAsync(async (req, res, next) => {
   console.log("HY .... i have been hit (POST REQUEST AGAINST CREATING POST).");
-  const { file, caption, category } = req.body;
+
+  const { caption, category } = req.body;
+
+  // Check if file is uploaded
+  if (!req.file || !req.file.path) {
+    return next(new appError("Image file not uploaded", 400));
+  }
+
+  const imageUrl = req.file.path; // Cloudinary gives a public URL in `path`
 
   const post = await Post.create({
-    file,
+    file: imageUrl, // Storing image URL
     caption,
     category,
     creator: req.user._id,
@@ -23,6 +31,28 @@ exports.createPost = catchAsync(async (req, res, next) => {
     data: post,
   });
 });
+
+// exports.createPost = catchAsync(async (req, res, next) => {
+//   console.log("HY .... i have been hit (POST REQUEST AGAINST CREATING POST).");
+//   const { file, caption, category } = req.body;
+
+//   const post = await Post.create({
+//     file,
+//     caption,
+//     category,
+//     creator: req.user._id,
+//   });
+
+//   if (!post) {
+//     return next(new appError("Requested post was not created.", 400));
+//   }
+
+//   res.status(200).json({
+//     message: "Post has been created successfully.",
+//     status: 200,
+//     data: post,
+//   });
+// });
 
 exports.getOnePst = catchAsync(async (req, res, next) => {
   const post = await Post.findById(req.params.id);

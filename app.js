@@ -13,8 +13,13 @@ app.use(
 );
 app.options("*", cors());
 
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ limit: "10mb", extended: true }));
+app.use(express.json({ limit: "50mb" }));
+
+app.use((req, res, next) => {
+  console.log("Request headers:", req.headers.origin);
+  next();
+});
+
 const authRoutes = require("./routes/authRoutes");
 const postRoutes = require("./routes/postRoutes");
 const favoriteRoutes = require("./routes/favoritesRoutes");

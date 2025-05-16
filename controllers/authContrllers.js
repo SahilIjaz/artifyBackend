@@ -410,13 +410,15 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
+  console.log("PRTECT HIT NOW");
   let token;
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
+    console.log("token is 12 : ", req.headers.authorization);
     token = req.headers.authorization.split(" ")[1];
-
+    console.log("token is : ", token);
     if (!token) {
       return next(new appError("Log in in order to get Access!", 401));
     }
@@ -431,12 +433,13 @@ exports.protect = catchAsync(async (req, res, next) => {
     if (!freshUser) {
       return next(new appError("This user no longer exists.", 401));
     }
-
+    console.log("fresh user is : ", freshUser);
     req.user = freshUser;
     next();
   } else {
     return next(new appError("Authorization header missing or invalid.", 401));
   }
+  console.log("user is : ", req.user);
 });
 
 exports.changePassword = catchAsync(async (req, res, next) => {

@@ -3,6 +3,7 @@ const catchAsync = require("../utils/catchAsync");
 const appError = require("../utils/appError");
 
 exports.createPost = catchAsync(async (req, res, next) => {
+  console.log("HY .... i have been hit (POST REQUEST AGAINST CREATING POST).");
   const { file, caption, category } = req.body;
 
   const post = await Post.create({

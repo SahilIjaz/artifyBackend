@@ -4,11 +4,10 @@ app.use(express.json());
 
 const cors = require("cors");
 
-// app.use(cors());
+// Enable CORS
 app.use(
   cors({
-    origin: "http://127.0.0.1:5500", // Or wherever you're serving the HTML
-    credentials: true,
+    origin: "http://127.0.0.1:5500", // Your frontend origin
   })
 );
 app.options("*", cors());

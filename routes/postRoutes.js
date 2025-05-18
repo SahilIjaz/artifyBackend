@@ -8,7 +8,7 @@ router
   .route("/create-post")
   .post(
     authControllers.protect,
-    upload.single("file"),
+    upload.single("image"),
     postControllers.createPost
   );
 

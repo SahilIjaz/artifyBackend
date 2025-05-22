@@ -28,8 +28,9 @@ router
   .route("/get-my-posts")
   .get(authControllers.protect, postControllers.ownAllPosts);
 
-router
-  .route("/get-posts-by-category/:category")
-  .get(authControllers.protect, postControllers.allPostsOneCategory);
+router.route("/get-posts-by-category/:category").get(
+  // authControllers.protect,
+  postControllers.allPostsOneCategory
+);
 
 module.exports = router;

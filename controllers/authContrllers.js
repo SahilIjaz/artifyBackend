@@ -14,7 +14,7 @@ const { log } = require("util");
 //signUp
 exports.signUp = catchAsync(async (req, res, next) => {
   let user;
-  const { email, password, confirmPassword, account } = req.body;
+  const { email, password, confirmPassword, account, name } = req.body;
 
   if (!(email || password)) {
     return res.status(400).json({
@@ -39,6 +39,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
     password,
     confirmPassword: password,
     role: account,
+    name,
   });
 
   console.log("USER CREATION PRIOR");

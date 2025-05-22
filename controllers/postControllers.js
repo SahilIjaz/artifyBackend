@@ -119,6 +119,7 @@ exports.ownAllPosts = catchAsync(async (req, res, next) => {
 });
 
 exports.allPostsOneCategory = catchAsync(async (req, res, next) => {
+  console.log("finding the posts by category");
   const posts = await Post.find({ category: req.params.category });
 
   if (posts.length === 0) {
